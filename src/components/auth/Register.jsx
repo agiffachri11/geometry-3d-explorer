@@ -28,6 +28,10 @@ function Register() {
       return setError('Passwords do not match');
     }
 
+    if (password.length < 6) {
+      return setError('Password should be at least 6 characters');
+    }
+
     try {
       setError('');
       setLoading(true);
