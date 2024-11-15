@@ -11,12 +11,11 @@
   width: 100%;
 }
 
-/* Tambahkan padding untuk konten utama */
 .main-content {
-  padding-bottom: 2rem; /* Memberi jarak antara konten dan footer */
+  padding-bottom: 2rem; 
 }
 
-/* Pastikan footer selalu di bawah */
+
 footer {
   margin-top: auto;
 }

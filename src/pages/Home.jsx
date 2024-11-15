@@ -28,6 +28,24 @@ function Home() {
   const MotionPaper = motion(Paper);
   const MotionBox = motion(Box);
 
+  const modules = [
+    {
+      title: "Basic Shapes",
+      description: "Introduction to 3D geometric shapes and their properties",
+      topics: ["Cube", "Sphere", "Cylinder", "Cone"],
+    },
+    {
+      title: "Surface Area",
+      description: "Learn to calculate surface areas of various 3D shapes",
+      topics: ["Concept Introduction", "Formula Application", "Shape Comparison"],
+    },
+    {
+      title: "Volume",
+      description: "Volume calculations for different geometric solids",
+      topics: ["Concept Introduction", "Formula Application", "Shape Comparison"],
+    }
+  ];
+
   const features = [
     {
       title: '3D Shape Explorer',
@@ -61,7 +79,6 @@ function Home() {
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
             sx={{
               textAlign: 'center',
               mb: 6,
@@ -99,27 +116,75 @@ function Home() {
             </Typography>
           </MotionBox>
 
-          {/* Quick Stats */}
+          {/* Modules Section */}
+          <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
+            Learning Modules
+          </Typography>
           <Grid container spacing={3} sx={{ mb: 6 }}>
-            {['Shapes Mastered', 'Quiz Score', 'Time Spent', 'Achievements'].map((stat, index) => (
-              <Grid item xs={12} sm={6} key={stat}>
+            {modules.map((module, index) => (
+              <Grid item xs={12} key={module.title}>
                 <MotionPaper
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   sx={{
                     p: 3,
-                    textAlign: 'center',
                     background: 'rgba(255, 255, 255, 0.8)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: 4,
                     border: '1px solid rgba(255, 255, 255, 0.2)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      transition: 'transform 0.3s ease-in-out',
+                      boxShadow: theme.shadows[8],
+                    }
                   }}
                 >
-                  <Typography variant="h4" fontWeight="bold" color="primary">
-                    {index === 1 ? '85%' : index === 2 ? '3h' : index === 3 ? '12' : '8'}
-                  </Typography>
-                  <Typography color="text.secondary">{stat}</Typography>
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="h6" fontWeight="bold">
+                      {module.title}
+                    </Typography>
+                    <Typography color="text.secondary" variant="body2">
+                      {module.description}
+                    </Typography>
+                  </Box>
+                  
+                  <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                    {module.topics.map((topic) => (
+                      <Box
+                        key={topic}
+                        sx={{
+                          px: 1.5,
+                          py: 0.5,
+                          bgcolor: 'rgba(0, 0, 0, 0.04)',
+                          borderRadius: '16px',
+                          fontSize: '0.75rem',
+                        }}
+                      >
+                        {topic}
+                      </Box>
+                    ))}
+                  </Box>
+
+                  <LinearProgress 
+                    variant="determinate" 
+                    value={module.progress} 
+                    sx={{ mb: 2, height: 6, borderRadius: 3 }} 
+                  />
+
+                  <Button
+                    variant="contained"
+                    startIcon={<PlayCircleOutline />}
+                    fullWidth
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      py: 1,
+                    }}
+                  >
+                    Learning
+                  </Button>
                 </MotionPaper>
               </Grid>
             ))}
@@ -127,7 +192,7 @@ function Home() {
 
           {/* Main Features */}
           <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
-            Learning
+          Shape Your Knowledge
           </Typography>
           <Grid container spacing={4}>
             {features.map((feature, index) => (
@@ -135,7 +200,6 @@ function Home() {
                 <MotionPaper
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
                   sx={{
                     p: 3,
                     height: '100%',
@@ -187,7 +251,7 @@ function Home() {
                         py: 1,
                       }}
                     >
-                     Learning
+                     Try
                     </Button>
                   </Box>
                 </MotionPaper>
@@ -201,7 +265,6 @@ function Home() {
           <MotionBox
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
           >
             <Leaderboard />
           </MotionBox>
