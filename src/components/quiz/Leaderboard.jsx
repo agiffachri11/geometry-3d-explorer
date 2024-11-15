@@ -187,7 +187,7 @@ function LeaderboardSkeleton() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[...Array(5)].map((_, i) => (
+            {[...Array(10)].map((_, i) => (
               <TableRow key={i}>
                 <TableCell><Skeleton width={30} /></TableCell>
                 <TableCell>

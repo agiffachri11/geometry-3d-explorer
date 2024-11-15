@@ -23,7 +23,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { updateUserProgress } from '../services/db';
 
 // Komponen untuk berbagai bentuk 3D
-function Cube({ dimensions = { width: 1, height: 1, depth: 1 }, color = "orange", position = [0, 0, 0] }) {
+function Cube({ dimensions = {}, color = "red", position = [0, 0, 0] }) {
   return (
     <mesh position={position}>
       <boxGeometry args={[dimensions.width, dimensions.height, dimensions.depth]} />
@@ -32,7 +32,7 @@ function Cube({ dimensions = { width: 1, height: 1, depth: 1 }, color = "orange"
   );
 }
 
-function Sphere({ dimensions = { width: 1 }, color = "blue", position = [0, 0, 0] }) {
+function Sphere({ dimensions = {}, color = "red", position = [0, 0, 0] }) {
   const radius = dimensions.width / 2;
   return (
     <mesh position={position}>
@@ -42,7 +42,7 @@ function Sphere({ dimensions = { width: 1 }, color = "blue", position = [0, 0, 0
   );
 }
 
-function Cylinder({ dimensions = { width: 1, height: 1 }, color = "green", position = [0, 0, 0] }) {
+function Cylinder({ dimensions = {}, color = "red", position = [0, 0, 0] }) {
   const radius = dimensions.width / 2;
   return (
     <mesh position={position}>
@@ -52,7 +52,7 @@ function Cylinder({ dimensions = { width: 1, height: 1 }, color = "green", posit
   );
 }
 
-function Cone({ dimensions = { width: 1, height: 1 }, color = "red", position = [0, 0, 0] }) {
+function Cone({ dimensions = {}, color = "red", position = [0, 0, 0] }) {
   const radius = dimensions.width / 2;
   return (
     <mesh position={position}>
@@ -67,7 +67,7 @@ function Explore() {
   const { currentUser } = useAuth();
   const [selectedShape, setSelectedShape] = useState('cube');
   const [dimensions, setDimensions] = useState({ width: 1, height: 1, depth: 1 });
-  const [color, setColor] = useState('orange');
+  const [color, setColor] = useState('red');
   const [shapesExplored, setShapesExplored] = useState(new Set());
 
   const handleShapeChange = (newShape) => {
@@ -80,10 +80,20 @@ function Explore() {
   };
 
   const handleDimensionChange = (dimension, value) => {
-    const numValue = parseFloat(value) || 0;
+    if (value === "" || value === ".") {
+      setDimensions(prev => ({
+        ...prev,
+        [dimension]: value
+      }));
+      return;
+    }
+
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) return;
+
     setDimensions(prev => ({
       ...prev,
-      [dimension]: numValue > 0 ? numValue : prev[dimension]
+      [dimension]: numValue
     }));
   };
 
@@ -118,7 +128,7 @@ function Explore() {
   const volume = shapes[selectedShape].volume(dimensions).toFixed(2);
   const surfaceArea = shapes[selectedShape].surfaceArea(dimensions).toFixed(2);
 
-  const colors = ['orange', 'blue', 'green', 'red', 'purple', 'teal'];
+  const colors = ['blue', 'green', 'red', 'purple'];
   const MotionPaper = motion(Paper);
 
   const renderDimensionInputs = () => {
@@ -132,6 +142,10 @@ function Explore() {
               type="number"
               value={dimensions.width}
               onChange={(e) => handleDimensionChange('width', e.target.value)}
+              inputProps={{ 
+                step: "0.1",
+                min: "0.1"
+              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
@@ -142,6 +156,10 @@ function Explore() {
               type="number"
               value={dimensions.height}
               onChange={(e) => handleDimensionChange('height', e.target.value)}
+              inputProps={{ 
+                step: "0.1",
+                min: "0.1"
+              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
@@ -152,6 +170,10 @@ function Explore() {
               type="number"
               value={dimensions.depth}
               onChange={(e) => handleDimensionChange('depth', e.target.value)}
+              inputProps={{ 
+                step: "0.1",
+                min: "0.1"
+              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
@@ -166,6 +188,10 @@ function Explore() {
             type="number"
             value={dimensions.width}
             onChange={(e) => handleDimensionChange('width', e.target.value)}
+            inputProps={{ 
+              step: "0.1",
+              min: "0.1"
+            }}
             InputProps={{
               endAdornment: <InputAdornment position="end">units</InputAdornment>,
             }}
@@ -181,6 +207,10 @@ function Explore() {
               type="number"
               value={dimensions.width}
               onChange={(e) => handleDimensionChange('width', e.target.value)}
+              inputProps={{ 
+                step: "0.1",
+                min: "0.1"
+              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
@@ -191,6 +221,10 @@ function Explore() {
               type="number"
               value={dimensions.height}
               onChange={(e) => handleDimensionChange('height', e.target.value)}
+              inputProps={{ 
+                step: "0.1",
+                min: "0.1"
+              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
