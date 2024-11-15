@@ -80,21 +80,26 @@ function Explore() {
   };
 
   const handleDimensionChange = (dimension, value) => {
-    if (value === "" || value === ".") {
+    // Validasi input - hanya terima angka, backspace, dan titik desimal
+    if (value === '' || value === '0') {
       setDimensions(prev => ({
         ...prev,
-        [dimension]: value
+        [dimension]: 0
       }));
       return;
     }
-
+  
+    // Hanya izinkan satu titik desimal
+    if (value.split('.').length > 2) return;
+  
+    // Izinkan input kosong untuk memungkinkan pengguna mengetik ulang
     const numValue = parseFloat(value);
-    if (isNaN(numValue)) return;
-
-    setDimensions(prev => ({
-      ...prev,
-      [dimension]: numValue
-    }));
+    if (!isNaN(numValue)) {
+      setDimensions(prev => ({
+        ...prev,
+        [dimension]: numValue
+      }));
+    }
   };
 
   const shapes = {
@@ -139,44 +144,35 @@ function Explore() {
             <TextField
               fullWidth
               label="Width"
-              type="number"
               value={dimensions.width}
               onChange={(e) => handleDimensionChange('width', e.target.value)}
-              inputProps={{ 
-                step: "0.1",
-                min: "0.1"
-              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
+              placeholder="Enter width"
+              helperText="Enter a positive number"
             />
             <TextField
               fullWidth
               label="Height"
-              type="number"
               value={dimensions.height}
               onChange={(e) => handleDimensionChange('height', e.target.value)}
-              inputProps={{ 
-                step: "0.1",
-                min: "0.1"
-              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
+              placeholder="Enter height"
+              helperText="Enter a positive number"
             />
             <TextField
               fullWidth
               label="Depth"
-              type="number"
               value={dimensions.depth}
               onChange={(e) => handleDimensionChange('depth', e.target.value)}
-              inputProps={{ 
-                step: "0.1",
-                min: "0.1"
-              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
+              placeholder="Enter depth"
+              helperText="Enter a positive number"
             />
           </Stack>
         );
@@ -185,16 +181,13 @@ function Explore() {
           <TextField
             fullWidth
             label="Diameter"
-            type="number"
             value={dimensions.width}
             onChange={(e) => handleDimensionChange('width', e.target.value)}
-            inputProps={{ 
-              step: "0.1",
-              min: "0.1"
-            }}
             InputProps={{
               endAdornment: <InputAdornment position="end">units</InputAdornment>,
             }}
+            placeholder="Enter diameter"
+            helperText="Enter a positive number"
           />
         );
       case 'cylinder':
@@ -204,30 +197,24 @@ function Explore() {
             <TextField
               fullWidth
               label="Diameter"
-              type="number"
               value={dimensions.width}
               onChange={(e) => handleDimensionChange('width', e.target.value)}
-              inputProps={{ 
-                step: "0.1",
-                min: "0.1"
-              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
+              placeholder="Enter diameter"
+              helperText="Enter a positive number"
             />
             <TextField
               fullWidth
               label="Height"
-              type="number"
               value={dimensions.height}
               onChange={(e) => handleDimensionChange('height', e.target.value)}
-              inputProps={{ 
-                step: "0.1",
-                min: "0.1"
-              }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">units</InputAdornment>,
               }}
+              placeholder="Enter height"
+              helperText="Enter a positive number"
             />
           </Stack>
         );
