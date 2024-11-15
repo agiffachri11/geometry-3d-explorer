@@ -10,6 +10,9 @@ import Register from './components/auth/Register'
 import Profile from './pages/Profile'; 
 import { useAuth } from './contexts/AuthContext'
 import Calculator from './pages/Calculator'
+import BasicShapesPage from './pages/BasicShapesPage';
+import SurfaceAreaPage from './pages/SurfaceAreaPage';
+import VolumePage from './pages/VolumePage';
 
 function App() {
   const { currentUser } = useAuth();
@@ -26,6 +29,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/calculator" element={<Calculator />} />
+          <Route path="/basic-shapes" element={<BasicShapesPage />} />
+          <Route path="/surface-area" element={<SurfaceAreaPage />} />
+          <Route path="/volume" element={<VolumePage />} />
         </Routes>
       </main>
       <Footer />

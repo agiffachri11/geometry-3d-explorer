@@ -122,7 +122,11 @@ function Profile() {
                 <LineChart data={quizData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
-                  <YAxis domain={[0, 100]} />
+                  <YAxis 
+                    domain={[0, 100]}
+                    ticks={[0, 20, 40, 60, 80, 100]} // Set interval yang diinginkan
+                    tickFormatter={(value) => `${value}%`} // Tambahkan simbol %
+                  />
                   <Tooltip />
                   <Legend />
                   <Line 

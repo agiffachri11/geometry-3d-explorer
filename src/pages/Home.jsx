@@ -177,6 +177,7 @@ function Home() {
                     variant="contained"
                     startIcon={<PlayCircleOutline />}
                     fullWidth
+                    onClick={() => navigate(`/${module.title.toLowerCase().replace(' ', '-')}`)}
                     sx={{
                       borderRadius: 2,
                       textTransform: 'none',
